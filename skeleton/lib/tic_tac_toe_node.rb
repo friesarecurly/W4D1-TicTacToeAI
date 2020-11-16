@@ -12,9 +12,23 @@ class TicTacToeNode
   end
 
   def losing_node?(evaluator)
+    if @board.over?
+      return @board.won? && (@board.winner != evaluator)
+      # return false
+    end
+    
+    children = self.children
+    if evaluator == @next_mover_mark
+      children.all? { |kid| kid.losing_node?(evaluator) }
+    else
+      children.any? { |kid| kid.losing_node?(evaluator) }
+    end
   end
 
   def winning_node?(evaluator)
+    return false if @board.winner == nil
+    @board.winner == evaluator
+
   end
 
   require "byebug"
@@ -24,7 +38,6 @@ class TicTacToeNode
 
     boards = []
     @board.rows.each_with_index do |row, i|
-      # sub_row = []
       row.each_with_index do |square, i2|
         if square == nil
           new_mark = ((@next_mover_mark == :x) ? :o : :x)
@@ -33,7 +46,6 @@ class TicTacToeNode
           boards << new_board
         end
       end
-      # boards << sub_row
     end
     boards
   end
