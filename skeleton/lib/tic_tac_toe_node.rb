@@ -43,7 +43,6 @@ class TicTacToeNode
   # This method generates an array of all moves that can be made after
   # the current move.
   def children
-
     kids = []
     @board.rows.each_with_index do |row, i|
       row.each_with_index do |square, i2|
