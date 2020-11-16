@@ -44,17 +44,17 @@ class TicTacToeNode
   # the current move.
   def children
 
-    boards = []
+    kids = []
     @board.rows.each_with_index do |row, i|
       row.each_with_index do |square, i2|
-        if square == nil
-          new_mark = ((@next_mover_mark == :x) ? :o : :x)
-          new_board = TicTacToeNode.new( @board.dup, new_mark, [i, i2])
-          new_board.board[[i,i2]] = new_mark
-          boards << new_board
+        if square == nil # if this square is empty, then it's a potential move.
+          new_mark = ((@next_mover_mark == :x) ? :o : :x) # get the opponent's mark
+          new_board = TicTacToeNode.new( @board.dup, new_mark, [i, i2]) # create a new board that is a duplicated of self.
+          new_board.board[[i,i2]] = @next_mover_mark # Add our mark to this potential board.
+          kids << new_board # Add this potential move to kids.
         end
       end
     end
-    boards
+    kids
   end
 end
